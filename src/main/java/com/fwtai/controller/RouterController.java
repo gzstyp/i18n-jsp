@@ -26,6 +26,16 @@ public class RouterController{
         return "index";
     }
 
+    @GetMapping("/home")
+    public String home(){
+        return "home";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
     @GetMapping("/language")
     public ModelAndView language(HttpServletRequest request,HttpServletResponse response,String language){
         final Locale locale = request.getLocale();
@@ -45,5 +55,24 @@ public class RouterController{
             }
         }
         return new ModelAndView("redirect:index");
+    }
+
+    @GetMapping("/target")
+    public ModelAndView page(final String page,final String language ,final HttpServletRequest request,final HttpServletResponse response){
+        final Locale locale = request.getLocale();
+        final LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+        System.out.println("locale:-->" + locale);
+        if(language == null || language.equals("")){
+            return new ModelAndView(page);
+        }else{
+            if(language.equalsIgnoreCase("zh_cn")){
+                localeResolver.setLocale(request,response,Locale.CHINA);
+            }else if(language.equalsIgnoreCase("en_us")){
+                localeResolver.setLocale(request,response,Locale.US);
+            }else{
+                localeResolver.setLocale(request,response,Locale.CHINA);
+            }
+        }
+        return new ModelAndView("redirect:"+page);
     }
 }
