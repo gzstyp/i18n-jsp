@@ -1,5 +1,6 @@
-package com.fwtai;
+package com.fwtai.config;
 
+import com.fwtai.LocaleLanguage;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,10 +18,9 @@ import java.util.Locale;
 public class I18nConfig{
 
     @Bean(name = "localeResolver")
-    public MyLocaleResolver myLocaleResolver(){
-        System.out.println("#####cookieLocaleResolver---create");
-        MyLocaleResolver myLocaleResolver = new MyLocaleResolver();
-        myLocaleResolver.setDefaultLocale(Locale.ENGLISH);
-        return myLocaleResolver;
+    public LocaleLanguage myLocaleResolver(){
+        LocaleLanguage localeLanguage = new LocaleLanguage();
+        localeLanguage.setDefaultLocale(Locale.ENGLISH);
+        return localeLanguage;
     }
 }

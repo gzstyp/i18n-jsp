@@ -1,4 +1,4 @@
-package com.fwtai;
+package com.fwtai.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,29 +21,29 @@ import java.util.Locale;
 @Controller
 public class RouterController{
 
-    @GetMapping("/welcome")
-    public String welcome(){
-        return "welcome";
+    @GetMapping(value = {"/","/index"})
+    public String index(){
+        return "index";
     }
 
     @GetMapping("/language")
     public ModelAndView language(HttpServletRequest request,HttpServletResponse response,String language){
-        Locale locale = request.getLocale();
-        LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+        final Locale locale = request.getLocale();
+        final LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
         language = language.toLowerCase();
         System.out.println("locale:-->" + locale);
         System.out.println("language:-->" + language);
         if(language == null || language.equals("")){
-            return new ModelAndView("welcome");
+            return new ModelAndView("index");
         }else{
             if(language.equals("zh_cn")){
                 localeResolver.setLocale(request,response,Locale.CHINA);
-            }else if(language.equals("en")){
+            }else if(language.equals("en_us")){
                 localeResolver.setLocale(request,response,Locale.US);
             }else{
                 localeResolver.setLocale(request,response,Locale.CHINA);
             }
         }
-        return new ModelAndView("redirect:welcome");
+        return new ModelAndView("redirect:index");
     }
 }
