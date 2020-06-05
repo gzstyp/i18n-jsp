@@ -4,6 +4,12 @@
 <html>
 <head>
     <title><spring:message code="title"/></title>
+    <style type="text/css">
+        a:link,a:visited,a:hover,a:active{
+            text-decoration: none;
+            outline:none;
+        }
+    </style>
 </head>
 <body>
 <spring:message code="welcome"/>
