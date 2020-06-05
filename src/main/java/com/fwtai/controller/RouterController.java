@@ -43,7 +43,7 @@ public class RouterController{
         language = language.toLowerCase();
         System.out.println("locale:-->" + locale);
         System.out.println("language:-->" + language);
-        if(language == null || language.equals("")){
+        if(language == null || language.length() <= 0){
             return new ModelAndView("index");
         }else{
             if(language.equals("zh_cn")){
@@ -58,11 +58,11 @@ public class RouterController{
     }
 
     @GetMapping("/target")
-    public ModelAndView page(final String page,final String language ,final HttpServletRequest request,final HttpServletResponse response){
+    public ModelAndView target(final String page,final String language ,final HttpServletRequest request,final HttpServletResponse response){
         final Locale locale = request.getLocale();
         final LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
         System.out.println("locale:-->" + locale);
-        if(language == null || language.equals("")){
+        if(language == null || language.length() <= 0){
             return new ModelAndView(page);
         }else{
             if(language.equalsIgnoreCase("zh_cn")){
@@ -74,5 +74,24 @@ public class RouterController{
             }
         }
         return new ModelAndView("redirect:"+page);
+    }
+
+    @GetMapping("/page")
+    public String page(final String page,final String language ,final HttpServletRequest request,final HttpServletResponse response){
+        final Locale locale = request.getLocale();
+        final LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+        System.out.println("locale:-->" + locale);
+        if(language == null || language.length() <= 0){
+            return page;
+        }else{
+            if(language.equalsIgnoreCase("zh_cn")){
+                localeResolver.setLocale(request,response,Locale.CHINA);
+            }else if(language.equalsIgnoreCase("en_us")){
+                localeResolver.setLocale(request,response,Locale.US);
+            }else{
+                localeResolver.setLocale(request,response,Locale.CHINA);
+            }
+        }
+        return "redirect:"+page;
     }
 }
